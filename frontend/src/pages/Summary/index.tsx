@@ -6,6 +6,7 @@ import { MedicalFlags, Flag } from "../../components/charts/MedicalFlags";
 import { ScoreChart } from "../../components/charts/ScoreChart";
 import { MedicalHistory } from "../../components/charts/MedicalHistory";
 import { DashboardStats } from "../../components/ui/DashboardStats";
+import { useLocation, Navigate } from 'react-router-dom';
 
 // Sample data
 const sampleFlags: Flag[] = [
@@ -47,6 +48,14 @@ const dashboardStats = {
 };
 
 export default function Summary() {
+  const location = useLocation();
+  const completed = location.state?.completed;
+
+  // Redirect if accessed directly without completing questionnaire
+  if (!completed) {
+    return <Navigate to="/questionnaire" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
