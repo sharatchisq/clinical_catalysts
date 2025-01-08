@@ -14,6 +14,7 @@ import {
   StatementQuestion,
   HeadingQuestion,
 } from "./questions";
+import { RequiredBadge } from "./components/RequiredBadge";
 
 interface QuestionRendererProps {
   question: Question;
@@ -56,13 +57,15 @@ export function QuestionRenderer({ question }: QuestionRendererProps) {
   };
 
   return (
-    <div className="space-y-6 bg-white p-8 rounded-xl shadow-sm">
-      <div className="text-xl font-semibold text-[#2C3E50]">
-        {question.text}
+    <div className="space-y-3">
+      <div className="flex items-center gap-2">
+        <div className="text-base font-medium text-gray-900">
+          {question.text}
+        </div>
+        {question.required && (
+          <RequiredBadge className="mt-0.5" />
+        )}
       </div>
-      {question.required && (
-        <span className="text-[#D32F2F] text-sm">* Required</span>
-      )}
       {renderQuestion(question)}
     </div>
   );

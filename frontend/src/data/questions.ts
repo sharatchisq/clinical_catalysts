@@ -12,7 +12,7 @@ export const questionnaire: Questionnaire = {
       type: "form",
       questions: [
         {
-          id: "name",
+          id: "demographics_name",
           text: "Please enter your name",
           type: "text",
           required: true,
@@ -22,7 +22,7 @@ export const questionnaire: Questionnaire = {
           },
         },
         {
-          id: "patientId",
+          id: "demographics_patientId",
           text: "Enter your Patient ID",
           type: "text",
           required: true,
@@ -33,13 +33,13 @@ export const questionnaire: Questionnaire = {
           },
         },
         {
-          id: "dob",
+          id: "demographics_dob",
           text: "Enter your date of birth",
           type: "date",
           required: true,
         },
         {
-          id: "sex",
+          id: "demographics_sex",
           text: "What is your sex?",
           type: "radio",
           required: true,
@@ -50,7 +50,7 @@ export const questionnaire: Questionnaire = {
           ],
         },
         {
-          id: "ethnicity",
+          id: "demographics_ethnicity",
           text: "What is your ethnicity?",
           type: "radio",
           required: true,
@@ -64,7 +64,7 @@ export const questionnaire: Questionnaire = {
         },
       ],
       nextQuestion: {
-        nextQuestionId: "q1",
+        nextQuestionId: "social",
       },
     },
     {
@@ -73,7 +73,7 @@ export const questionnaire: Questionnaire = {
       type: "form",
       questions: [
         {
-          id: "qualification",
+          id: "social_qualification",
           text: "What is your highest qualification level?",
           type: "radio",
           required: true,
@@ -85,7 +85,7 @@ export const questionnaire: Questionnaire = {
           ],
         },
         {
-          id: "occupation",
+          id: "social_occupation",
           text: "What is your current occupation status?",
           type: "radio",
           required: true,
@@ -97,7 +97,7 @@ export const questionnaire: Questionnaire = {
           ],
         },
         {
-          id: "learning_disabilities",
+          id: "social_learning_disabilities",
           text: "Do you have any learning disabilities?",
           type: "radio",
           required: true,
@@ -110,7 +110,7 @@ export const questionnaire: Questionnaire = {
           ],
         },
         {
-          id: "smoker",
+          id: "social_smoker",
           text: "Are you a smoker?",
           type: "radio",
           required: true,
@@ -120,7 +120,7 @@ export const questionnaire: Questionnaire = {
           ],
         },
         {
-          id: "alcoholic",
+          id: "social_alcoholic",
           text: "Do you consume alcohol?",
           type: "radio",
           required: true,
@@ -134,9 +134,9 @@ export const questionnaire: Questionnaire = {
         conditions: [
           {
             value: {
-              learning_disabilities: "no",
-              smoker: "no",
-              alcoholic: "no"
+              social_learning_disabilities: "no",
+              social_smoker: "no",
+              social_alcoholic: "no"
             },
             nextQuestionId: "medical"
           },
@@ -153,7 +153,7 @@ export const questionnaire: Questionnaire = {
       type: "form",
       questions: [
         {
-          id: "hospitalization",
+          id: "medical_hospitalization",
           text: "Have you been hospitalized in the past year?",
           type: "radio",
           required: true,
@@ -163,7 +163,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "diabetic",
+          id: "medical_diabetic",
           text: "Are you diabetic?",
           type: "radio",
           required: true,
@@ -173,7 +173,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "thyroid",
+          id: "medical_thyroid",
           text: "Do you have any thyroid conditions?",
           type: "radio",
           required: true,
@@ -184,7 +184,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "cancer",
+          id: "medical_cancer",
           text: "Do you have or had cancer?",
           type: "radio",
           required: true,
@@ -194,7 +194,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "stroke",
+          id: "medical_stroke",
           text: "Have you ever had a stroke or cerebrovascular attack?",
           type: "radio",
           required: true,
@@ -204,7 +204,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "cardiac",
+          id: "medical_cardiac",
           text: "Do you have any cardiac problems?",
           type: "radio",
           required: true,
@@ -216,7 +216,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "head_injuries",
+          id: "medical_head_injuries",
           text: "Have you experienced any head injuries?",
           type: "radio",
           required: true,
@@ -228,7 +228,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "seizure",
+          id: "medical_seizure",
           text: "Do you have seizures, epilepsy, or fits?",
           type: "radio",
           required: true,
@@ -238,7 +238,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "renal",
+          id: "medical_renal",
           text: "Do you have any renal conditions?",
           type: "radio",
           required: true,
@@ -250,7 +250,7 @@ export const questionnaire: Questionnaire = {
           ]
         },
         {
-          id: "liver",
+          id: "medical_liver",
           text: "Do you have any liver conditions?",
           type: "radio",
           required: true,
@@ -266,9 +266,9 @@ export const questionnaire: Questionnaire = {
         conditions: [
           {
             value: {
-              head_injuries: "no",
-              seizure: "no",
-              renal: "no"
+              medical_head_injuries: "no",
+              medical_seizure: "no",
+              medical_renal: "no"
             },
             nextQuestionId: "functional"
           },
@@ -285,13 +285,13 @@ export const questionnaire: Questionnaire = {
       type: "form",
       questions: [
         {
-          id: "personal_heading",
+          id: "functional_heading_personal",
           text: "Personal",
           type: "heading",
           category: "personal"
         },
         {
-          id: "personal_clothes",
+          id: "functional_clothes",
           text: "Do you require assistance for putting on clothes?",
           type: "radio",
           required: true,
@@ -306,7 +306,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "personal_meals",
+          id: "functional_meals",
           text: "Do you take at least two meals everyday?",
           type: "radio",
           required: true,
@@ -321,7 +321,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "personal_bedroom",
+          id: "functional_bedroom",
           text: "Do you keep your bedroom neat & clean?",
           type: "radio",
           required: true,
@@ -336,13 +336,13 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "social_heading",
+          id: "functional_heading_social",
           text: "Social",
           type: "heading",
           category: "social"
         },
         {
-          id: "social_support",
+          id: "functional_support",
           text: "Do you have a support system on your own?",
           type: "radio",
           required: true,
@@ -357,7 +357,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "social_activities",
+          id: "functional_activities",
           text: "Do you engage in social activities?",
           type: "radio",
           required: true,
@@ -372,7 +372,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "social_conversations",
+          id: "functional_conversations",
           text: "Are you able to respond to conversations properly?",
           type: "radio",
           required: true,
@@ -387,13 +387,13 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "hobbies_heading",
+          id: "functional_heading_hobbies",
           text: "Hobbies and Interests",
           type: "heading",
           category: "hobbies"
         },
         {
-          id: "hobbies_active",
+          id: "functional_active",
           text: "Do you have any active hobbies?",
           type: "radio",
           required: true,
@@ -408,7 +408,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "hobbies_engage",
+          id: "functional_engage",
           text: "Are you able to engage yourself in your hobbies?",
           type: "radio",
           required: true,
@@ -423,13 +423,13 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "activities_heading",
+          id: "functional_heading_activities",
           text: "Activities and Engagement",
           type: "heading",
           category: "activities"
         },
         {
-          id: "activities_transport",
+          id: "functional_transport",
           text: "Are you able to drive or use public transport on your own?",
           type: "radio",
           required: true,
@@ -444,7 +444,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "activities_shopping",
+          id: "functional_shopping",
           text: "Are you able to go for shopping alone?",
           type: "radio",
           required: true,
@@ -459,7 +459,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "activities_sports",
+          id: "functional_sports",
           text: "Do you play any regular sports?",
           type: "radio",
           required: true,
@@ -644,7 +644,7 @@ export const questionnaire: Questionnaire = {
       type: "form",
       questions: [
         {
-          id: "cognition_memory_problems",
+          id: "cognitive_memory_problems",
           text: "Do you have any memory problems?",
           type: "radio",
           required: true,
@@ -659,7 +659,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_short_term",
+          id: "cognitive_short_term",
           text: "Do you experience short term memory problems?",
           type: "radio",
           required: true,
@@ -674,7 +674,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_long_term",
+          id: "cognitive_long_term",
           text: "Have you ever experienced any long term memory problems, such as difficulty to remember past events?",
           type: "radio",
           required: true,
@@ -689,7 +689,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_progression",
+          id: "cognitive_progression",
           text: "Is there a gradual progression in your memory problems?",
           type: "radio",
           required: true,
@@ -704,7 +704,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_memory_aids",
+          id: "cognitive_memory_aids",
           text: "Do you frequently use calendars / diaries as memory aids?",
           type: "radio",
           required: true,
@@ -719,7 +719,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_focus",
+          id: "cognitive_focus",
           text: "Do you find difficulty in focusing on anything?",
           type: "radio",
           required: true,
@@ -734,7 +734,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_speech",
+          id: "cognitive_speech",
           text: "Have you experienced any speech difficulties?",
           type: "radio",
           required: true,
@@ -749,7 +749,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_expression",
+          id: "cognitive_expression",
           text: "Do you find difficulty in expressing yourself?",
           type: "radio",
           required: true,
@@ -764,7 +764,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_word_finding",
+          id: "cognitive_word_finding",
           text: "Do you experience any word finding problems?",
           type: "radio",
           required: true,
@@ -779,7 +779,7 @@ export const questionnaire: Questionnaire = {
           }
         },
         {
-          id: "cognition_repetition",
+          id: "cognitive_repetition",
           text: "Do you find yourself repeating the same thing in conversations?",
           type: "radio",
           required: true,

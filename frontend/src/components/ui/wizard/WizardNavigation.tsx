@@ -12,18 +12,21 @@ export function WizardNavigation() {
   const isLastSection = currentIndex === questionnaire.sections.length - 1;
 
   return (
-    <div className="flex justify-between mt-8">
+    <div className="flex justify-between items-center">
       <button
         onClick={previousSection}
         disabled={isFirstSection}
-        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg disabled:opacity-50"
+        className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
       >
         Previous Section
       </button>
+      <div className="text-sm text-gray-500">
+        Section {currentIndex + 1} of {questionnaire.sections.length}
+      </div>
       <button
         onClick={nextSection}
         disabled={isLastSection}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
       >
         Next Section
       </button>
