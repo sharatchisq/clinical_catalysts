@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { OTPInput } from "../../components/ui/OTPInput";
+import toast from 'react-hot-toast';
 
 export default function OTPLogin() {
   const [otp, setOTP] = useState("");
   const navigate = useNavigate();
 
   const handleVerify = () => {
-    if (otp.length === 6) {
-      navigate("/dashboard");
+    if (otp === '000000') {
+      sessionStorage.setItem('isAuthenticated', 'true');
+      navigate('/create-password');
+    } else {
+      setOTP(''); // Clear OTP input
+      toast.error('Invalid OTP. Please try again.', {
+        duration: 3000,
+        style: {
+          background: '#f44336',
+          color: '#fff',
+        },
+      });
     }
   };
 
@@ -51,15 +62,6 @@ export default function OTPLogin() {
                 className="text-sm font-medium text-blue-600 hover:text-blue-500"
               >
                 Didn't receive code? Resend
-              </button>
-            </div>
-
-            <div className="mt-6">
-              <button
-                onClick={() => navigate("/login")}
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-500 bg-white hover:bg-gray-50"
-              >
-                Sign in with Email
               </button>
             </div>
           </div>

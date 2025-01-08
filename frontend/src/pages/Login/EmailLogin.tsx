@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function EmailLogin() {
@@ -29,7 +29,7 @@ export default function EmailLogin() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit} autoComplete="off">
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
             )}
@@ -43,7 +43,6 @@ export default function EmailLogin() {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +60,6 @@ export default function EmailLogin() {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -95,9 +93,9 @@ export default function EmailLogin() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 

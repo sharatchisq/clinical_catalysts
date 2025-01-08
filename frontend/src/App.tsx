@@ -1,17 +1,23 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { LoginPage } from './pages/Login';
+import  LoginPage  from './pages/Login/EmailLogin';
 import Dashboard from './pages/Dashboard';
 import SummaryPage from './pages/Summary';
 import OTPLogin from './pages/Login/OTPLogin';
+import CreatePassword from './pages/Login/CreatePassword';
+import { Toaster } from 'react-hot-toast';
+import ForgotPassword from './pages/Login/ForgotPassword';
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/" element={<OTPLogin />} />
+        <Route path="/create-password" element={<CreatePassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
   );

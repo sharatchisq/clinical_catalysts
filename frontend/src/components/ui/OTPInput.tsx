@@ -17,6 +17,12 @@ export function OTPInput({ value, onChange, length = 6 }: OTPInputProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const newValue = e.target.value;
+    
+    // Only allow numbers
+    if (!/^\d*$/.test(newValue)) {
+      return;
+    }
+
     if (newValue.length > 1) return;
 
     const newOTP = value.split('');
@@ -38,8 +44,15 @@ export function OTPInput({ value, onChange, length = 6 }: OTPInputProps) {
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData('text/plain').slice(0, length);
-    onChange(pastedData);
+    const pastedData = e.clipboardData.getData('text/plain');
+    
+    // Only allow numbers in pasted content
+    if (!/^\d*$/.test(pastedData)) {
+      return;
+    }
+    
+    const validData = pastedData.slice(0, length);
+    onChange(validData);
   };
 
   return (
