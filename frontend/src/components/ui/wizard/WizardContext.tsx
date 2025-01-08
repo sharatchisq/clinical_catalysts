@@ -1,11 +1,16 @@
 import { create } from 'zustand';
 import { questionnaire } from '../../../data/questions';
 
+export interface Answer {
+  value: string;
+  timestamp: number;
+}
+
 interface WizardState {
   currentSectionId: string;
   setCurrentSectionId: (sectionId: string) => void;
-  answers: { [key: string]: any };
-  setAnswer: (questionId: string, value: any) => void;
+  answers: { [key: string]: Answer };
+  setAnswer: (questionId: string, value: string) => void;
   nextSection: () => void;
   previousSection: () => void;
   canGoNext: boolean;
@@ -19,9 +24,15 @@ export const useWizard = create<WizardState>((set, get) => ({
   canGoNext: true,
   canGoPrevious: false,
 
-  setAnswer: (questionId: string, value: any) =>
+  setAnswer: (questionId: string, value: string) =>
     set((state) => ({
-      answers: { ...state.answers, [questionId]: value },
+      answers: { 
+        ...state.answers, 
+        [questionId]: { 
+          value, 
+          timestamp: Date.now() 
+        } 
+      },
     })),
 
   nextSection: () => {

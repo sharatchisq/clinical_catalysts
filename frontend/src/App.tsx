@@ -1,10 +1,19 @@
-import React from 'react';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './routes';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LoginPage } from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import SummaryPage from './pages/Summary';
+import OTPLogin from './pages/Login/OTPLogin';
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/summary" element={<SummaryPage />} />
+        <Route path="/" element={<OTPLogin />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

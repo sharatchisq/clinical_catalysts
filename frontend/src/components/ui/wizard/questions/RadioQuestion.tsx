@@ -89,7 +89,7 @@ const getOptionIcon = (value: string, type: string) => {
 };
 
 export function RadioQuestion({ question, onChange }: BaseQuestionProps) {
-  const answer = useWizard(state => state.answers[question.id]) ?? "";
+  const answer = useWizard(state => state.answers[question.id]?.value) ?? "";
   const isYesNo = question.options?.length === 2 && 
     question.options[0].value === "yes" && 
     question.options[1].value === "no";

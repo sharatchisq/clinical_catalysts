@@ -3,7 +3,7 @@ import { BaseQuestionLayout, BaseQuestionProps } from "./BaseQuestion";
 import { useWizard } from "../WizardContext";
 
 export function DateQuestion({ question, onChange }: BaseQuestionProps) {
-  const answer = useWizard(state => state.answers[question.id] || "");
+  const answer = useWizard(state => state.answers[question.id]?.value) ?? "";
 
   return (
     <BaseQuestionLayout question={question} onChange={onChange}>

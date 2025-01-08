@@ -3,12 +3,13 @@ import { useWizardAnswer } from "../WizardContext";
 import { cn } from "../../../../lib/utils";
 
 export function MultiSelectQuestion({ question, onChange }: BaseQuestionProps) {
-  const answer = useWizardAnswer(question.id) || [];
+  const answer = useWizardAnswer(question.id);
+  const values = (answer?.value || []) as string[];
 
   const handleChange = (value: string) => {
-    const newAnswer = answer.includes(value)
-      ? answer.filter((v: string) => v !== value)
-      : [...answer, value];
+    const newAnswer = values.includes(value)
+      ? values.filter((v: string) => v !== value)
+      : [...values, value];
     onChange?.(newAnswer);
   };
 
@@ -21,7 +22,7 @@ export function MultiSelectQuestion({ question, onChange }: BaseQuestionProps) {
             className={cn(
               "flex items-center space-x-3 p-3 rounded-lg border cursor-pointer",
               "transition-colors duration-200",
-              answer.includes(option.value)
+              values.includes(option.value)
                 ? "border-blue-500 bg-blue-50"
                 : "border-gray-200 hover:bg-gray-50"
             )}
@@ -29,7 +30,7 @@ export function MultiSelectQuestion({ question, onChange }: BaseQuestionProps) {
             <input
               type="checkbox"
               value={option.value}
-              checked={answer.includes(option.value)}
+              checked={values.includes(option.value)}
               onChange={(e) => handleChange(e.target.value)}
               className="h-4 w-4 text-blue-600 rounded"
             />

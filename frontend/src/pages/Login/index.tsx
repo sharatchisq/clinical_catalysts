@@ -1,65 +1,35 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { OTPInput } from "../../components/ui/OTPInput";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
-  const [otp, setOTP] = useState("");
+export function LoginPage() {
   const navigate = useNavigate();
 
-  const handleVerify = () => {
-    // Add your OTP verification logic here
-    if (otp.length === 6) {
-      navigate("/dashboard");
-    }
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add your login logic here
+    
+    // For now, just navigate to the summary page
+    navigate('/summary');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-          Verify OTP
-        </h2>
-        <div className="mt-2 text-center text-sm text-gray-600">
-          We've sent a verification code to your mobile
-        </div>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Enter verification code
-              </label>
-              <div className="mt-2">
-                <OTPInput 
-                  value={otp} 
-                  onChange={setOTP} 
-                  length={6} 
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                onClick={handleVerify}
-                disabled={otp.length !== 6}
-                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Verify & Continue
-              </button>
-            </div>
-
-            <div className="text-center">
-              <button
-                type="button"
-                className="text-sm font-medium text-blue-600 hover:text-blue-500"
-              >
-                Didn't receive code? Resend
-              </button>
-            </div>
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="w-full max-w-md">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-semibold text-slate-900">Welcome Back</h1>
+            <p className="text-slate-500 mt-2">Please sign in to continue</p>
           </div>
-        </div>
+          
+          <div className="space-y-6">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              View Summary
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
