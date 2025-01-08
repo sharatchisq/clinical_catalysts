@@ -1,15 +1,20 @@
-import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
-import Login from '../pages/Login';
-import Dashboard from '../pages/Dashboard';
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import OTPLogin from "../pages/Login/OTPLogin";
+import EmailLogin from "../pages/Login/EmailLogin";
+import Dashboard from "../pages/Dashboard";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Login />,
+    path: "/",
+    element: <OTPLogin />,
   },
   {
-    path: '/dashboard',
+    path: "/login",
+    element: <EmailLogin />,
+  },
+  {
+    path: "/dashboard",
     element: <Dashboard />,
   },
-]); 
+]);

@@ -3,6 +3,7 @@ import { questionnaire } from '../../../data/questions';
 
 interface WizardState {
   currentSectionId: string;
+  setCurrentSectionId: (sectionId: string) => void;
   answers: { [key: string]: any };
   setAnswer: (questionId: string, value: any) => void;
   nextSection: () => void;
@@ -13,6 +14,7 @@ interface WizardState {
 
 export const useWizard = create<WizardState>((set, get) => ({
   currentSectionId: questionnaire.sections[0].id,
+  setCurrentSectionId: (sectionId: string) => set({ currentSectionId: sectionId }),
   answers: {},
   canGoNext: true,
   canGoPrevious: false,
