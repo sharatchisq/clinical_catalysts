@@ -3,6 +3,7 @@ import { useWizard } from './WizardContext';
 import { questionnaire } from '../../../data/questions';
 import { cn } from '../../../lib/utils';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export function WizardNavigation() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export function WizardNavigation() {
     });
   }, [currentSection, answers]);
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     // Process and log answers
     const processedAnswers = Object.entries(answers).reduce((acc, [questionId, answer]) => {
       // Find question details from questionnaire
@@ -49,14 +50,21 @@ export function WizardNavigation() {
     console.log('Raw Answers:', answers);
     console.log('Processed Answers:', processedAnswers);
     console.groupEnd();
+    
+    // Axios call to host
+    const response = await axios.post('http://localhost:8080/answers', {
+      answers,
+      userId: "PAT001"
+    });
+    console.log("Resposnse", response);
 
     // Navigate to summary
-    navigate('/summary', { 
-      state: { 
-        answers: processedAnswers,
-        completed: true 
-      }
-    });
+    // navigate('/summary', { 
+    //   state: { 
+    //     answers: processedAnswers,
+    //     completed: true 
+    //   }
+    // });
   };
 
   return (
