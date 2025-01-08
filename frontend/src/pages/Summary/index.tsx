@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
 import { Header } from "../../components/ui/Header";
 import { Navigation } from "../../components/ui/Navigation";
@@ -7,6 +7,7 @@ import { ScoreChart } from "../../components/charts/ScoreChart";
 import { MedicalHistory } from "../../components/charts/MedicalHistory";
 import { DashboardStats } from "../../components/ui/DashboardStats";
 import { useLocation, Navigate } from 'react-router-dom';
+import axios from "axios";
 
 // Sample data
 const sampleFlags: Flag[] = [
@@ -50,11 +51,27 @@ const dashboardStats = {
 export default function Summary() {
   const location = useLocation();
   const completed = location.state?.completed;
+  const [answers, setAnswers] = useState([]);
+
+  useEffect(() => {
+    const fetchAnswers = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/answers');
+        setAnswers(response.data);
+      } catch (error) {
+        console.error('Error fetching answers:', error);
+      }
+    };
+
+    fetchAnswers();
+  }, []);
+
+  console.log(answers);
 
   // Redirect if accessed directly without completing questionnaire
-  if (!completed) {
-    return <Navigate to="/questionnaire" replace />;
-  }
+  // if (!completed) {
+  //   return <Navigate to="/questionnaire" replace />;
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50">

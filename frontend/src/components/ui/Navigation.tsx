@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, FileText, BarChart2, Settings } from 'lucide-react';
+import { Home, FileText, BarChart2, Settings, User } from 'lucide-react';
 
 const navItems = [
   { icon: Home, label: 'Dashboard', path: '/dashboard' },
-  { icon: FileText, label: 'Questionnaire', path: '/questionnaire' },
+//   { icon: FileText, label: 'Questionnaire', path: '/questionnaire' },
   { icon: BarChart2, label: 'Summary', path: '/summary' },
-  { icon: Settings, label: 'Settings', path: '/settings' },
+  { icon: User, label: 'Add Patient', path: '/add-patient' },
 ];
 
 export function Navigation() {
@@ -33,7 +33,7 @@ export function Navigation() {
                 onClick={() => navigate(item.path)}
                 className={`flex items-center px-3 py-4 text-sm font-medium ${
                   isActive 
-                    ? 'text-blue-600 border-b-2 border-blue-600' 
+                    ? 'text-blue-600 ' 
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
                 whileHover={{ y: -2 }}

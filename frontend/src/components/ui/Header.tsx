@@ -23,7 +23,7 @@ export function Header() {
           <div className="flex items-center">
             <Menu className="h-6 w-6 text-gray-600 cursor-pointer" />
             <span className="ml-3 text-xl font-semibold text-gray-800">
-              Clinical Catalysts
+              EMAT
             </span>
           </div>
           

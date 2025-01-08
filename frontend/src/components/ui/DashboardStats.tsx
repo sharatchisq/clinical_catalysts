@@ -38,7 +38,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
     <div className="bg-[#d1e4e3] rounded-2xl p-6 flex">
       {/* First horizontal section */}
-      <div className="flex border-b border-gray-100 pb-6">
+      <div className="flex border-gray-100 pb-6">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-sm text-gray-600">Laboratory workload</span>
@@ -60,7 +60,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
       </div>
 
       {/* Second horizontal section with vertical split */}
-      <div className="flex border-b border-gray-100 py-4 flex-col">
+      <div className="flex border-gray-100 py-4 flex-col">
         <Stat 
           label="Urgent"
           value={stats.urgent}
@@ -76,7 +76,7 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
       </div>
 
       {/* Third horizontal section with vertical split */}
-      <div className="flex pt-4 flex-col">
+      <div className="flex py-4 flex-col">
         <Stat 
           label="In Progress"
           value={stats.inProgress}
