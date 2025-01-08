@@ -6,6 +6,7 @@ import OTPLogin from './pages/Login/OTPLogin';
 import CreatePassword from './pages/Login/CreatePassword';
 import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './pages/Login/ForgotPassword';
+import Questionnaire from './pages/Questionnaire';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Toaster position="top-right" />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/questionnaire" element={<Dashboard />} />
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/" element={<OTPLogin />} />
         <Route path="/create-password" element={<CreatePassword />} />
