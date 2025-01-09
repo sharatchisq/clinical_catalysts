@@ -797,6 +797,32 @@ export const questionnaire: Questionnaire = {
       nextQuestion: {
         nextQuestionId: "end"
       }
+    },
+    {
+      id: "end",
+      title: "Assessment Complete",
+      type: "form",
+      questions: [
+        {
+          id: "end_feedback",
+          text: "Do you have any additional concerns you'd like to share?",
+          type: "textarea",
+          required: false
+        },
+        {
+          id: "end_followup",
+          text: "Would you like to schedule a follow-up appointment?",
+          type: "radio",
+          required: true,
+          options: [
+            { value: "yes", label: "Yes, please schedule" },
+            { value: "no", label: "No, not at this time" }
+          ]
+        }
+      ],
+      nextQuestion: {
+        nextQuestionId: "summary"
+      }
     }
   ],
   scoring: {

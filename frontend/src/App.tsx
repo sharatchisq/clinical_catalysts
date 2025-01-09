@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './pages/Login/ForgotPassword';
 import Questionnaire from './pages/Questionnaire';
 import { UserProvider } from './context/UserContext';
+import Summary from './pages/Summary';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/questionnaire" element={<Questionnaire />} />
-          <Route path="/summary" element={<SummaryPage />} />
+          <Route path="/summary" element={<Summary />} />
           <Route path="/" element={<OTPLogin />} />
           <Route path="/create-password" element={<CreatePassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

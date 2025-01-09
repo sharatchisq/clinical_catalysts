@@ -1,124 +1,114 @@
-import React, { useEffect, useState } from "react";
-import { motion } from 'framer-motion';
-import { Header } from "../../components/ui/Header";
-import { Navigation } from "../../components/ui/Navigation";
-import { MedicalFlags, Flag } from "../../components/charts/MedicalFlags";
-import { ScoreChart } from "../../components/charts/ScoreChart";
-import { MedicalHistory } from "../../components/charts/MedicalHistory";
-import { DashboardStats } from "../../components/ui/DashboardStats";
-import { useLocation, Navigate } from 'react-router-dom';
-import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { questionnaire } from "../../data/questions";
 
-// Sample data
-const sampleFlags: Flag[] = [
-  { condition: "Cancer", severity: "high" as const },
-  { condition: "Stroke", severity: "medium" as const },
-  { condition: "Cardiac Problems", severity: "high" as const },
-];
-
-const sampleScores = [
-  { category: "Functional Assessment", value: 75, maxValue: 100 },
-  { category: "Behavioral Assessment", value: 85, maxValue: 100 },
-  { category: "Cognitive Assessment", value: 60, maxValue: 100 },
-];
-
-const sampleHistory = [
-  {
-    condition: "Cancer",
-    date: "2022-05-15",
-    details: "Diagnosed with stage 2 breast cancer, underwent chemotherapy",
-  },
-  {
-    condition: "Stroke",
-    date: "2023-01-10",
-    details: "Minor stroke, recovered with physical therapy",
-  },
-  {
-    condition: "Cardiac Problems",
-    date: "2023-08-20",
-    details: "Diagnosed with arrhythmia, on medication",
-  },
-];
-
-const dashboardStats = {
-  workload: 88,
-  urgent: 0,
-  pending: 4,
-  inProgress: 38,
-  completed: 265,
-};
-
-export default function Summary() {
-  const location = useLocation();
-  const completed = location.state?.completed;
-  const [answers, setAnswers] = useState([]);
-
-  useEffect(() => {
-    const fetchAnswers = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/answers');
-        setAnswers(response.data);
-      } catch (error) {
-        console.error('Error fetching answers:', error);
-      }
+interface SummaryProps {
+  answers: {
+    [key: string]: {
+      question: string;
+      answer: string;
+      category: string;
+      timestamp: string;
     };
+  };
+}
 
-    fetchAnswers();
-  }, []);
-
+const Summary = () => {
+  const location = useLocation();
+  const { answers } = location.state as SummaryProps;
   console.log(answers);
 
-  // Redirect if accessed directly without completing questionnaire
-  // if (!completed) {
-  //   return <Navigate to="/questionnaire" replace />;
-  // }
+  const groupedAnswers = Object.entries(answers).reduce((acc, [id, data]) => {
+    const section = questionnaire.sections.find(s => 
+      s.questions.some(q => q.id === id)
+    );
+    if (!section) return acc;
+
+    if (!acc[section.title]) {
+      acc[section.title] = [];
+    }
+    acc[section.title].push({ id, ...data });
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  const getAnswerStyle = (answer: string) => {
+    if (answer === "yes") {
+      return "text-red-600 font-medium";
+    }
+    if (answer === "no") {
+      return "text-green-600 font-medium";
+    }
+    return "text-slate-600";
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <Navigation />
-      
-      <motion.div 
-        className="py-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.h2 
-            className="text-2xl font-bold text-gray-900 mb-6"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            Patient Summary
-          </motion.h2>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <div className="md:col-span-8">
-              <DashboardStats stats={dashboardStats} />
-            </div>
-            <div className="md:col-span-4">
-              <MedicalFlags flags={sampleFlags} />
-            </div>
-          </motion.div>
+    <div className="min-h-screen bg-slate-50 py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        <h1 className="text-2xl font-bold text-slate-900 mb-6">
+          Assessment Summary
+        </h1>
 
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <ScoreChart scores={sampleScores} />
-            <MedicalHistory history={sampleHistory} />
-          </motion.div>
+        <div className="space-y-6">
+          {Object.entries(groupedAnswers).map(([section, sectionAnswers]) => (
+            <Card key={section}>
+              <CardHeader>
+                <CardTitle>{section}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {sectionAnswers.map((answer) => (
+                    <div
+                      key={answer.id}
+                      className="flex justify-between items-start py-2 border-b border-slate-100 last:border-0"
+                    >
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium text-slate-900">
+                          {answer.question}
+                        </p>
+                        {/* <p className="text-xs text-slate-500">
+                          Answered on {answer.timestamp}
+                        </p> */}
+                      </div>
+                      <div className={`text-sm ${getAnswerStyle(answer.answer)}`}>
+                        {answer.answer}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </motion.div>
+
+        <div className="mt-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Risk Assessment</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {Object.entries(groupedAnswers).map(([section, answers]) => {
+                  const riskAnswers = answers.filter(a => a.answer === "yes");
+                  if (riskAnswers.length === 0) return null;
+
+                  return (
+                    <div key={section} className="text-sm">
+                      <p className="font-medium text-slate-900">{section}</p>
+                      <ul className="mt-1 space-y-1 text-red-600">
+                        {riskAnswers.map(a => (
+                          <li key={a.id}>{a.question}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Summary;

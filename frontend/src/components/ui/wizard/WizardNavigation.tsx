@@ -8,7 +8,7 @@ import axios from 'axios';
 export function WizardNavigation() {
   const navigate = useNavigate();
   const nextSection = useWizard(state => state.nextSection);
-  const previousSection = useWizard(state => state.previousSection);
+  const prevSection = useWizard(state => state.prevSection);
   const currentSectionId = useWizard(state => state.currentSectionId);
   const answers = useWizard(state => state.answers);
   
@@ -59,18 +59,17 @@ export function WizardNavigation() {
     console.log("Resposnse", response);
 
     // Navigate to summary
-    // navigate('/summary', { 
-    //   state: { 
-    //     answers: processedAnswers,
-    //     completed: true 
-    //   }
-    // });
+    navigate('/summary', { 
+      state: { 
+        answers: processedAnswers
+      }
+    });
   };
 
   return (
     <div className="flex justify-between items-center">
       <button
-        onClick={previousSection}
+        onClick={prevSection}
         disabled={isFirstSection}
         className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
       >

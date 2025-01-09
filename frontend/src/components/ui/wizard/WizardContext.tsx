@@ -1,5 +1,6 @@
-import { create } from 'zustand';
-import { questionnaire } from '../../../data/questions';
+import { createContext, useContext, useCallback } from "react";
+import { create } from "zustand";
+import { questionnaire } from "../../../data/questions";
 
 export interface Answer {
   value: string;
@@ -8,53 +9,66 @@ export interface Answer {
 
 interface WizardState {
   currentSectionId: string;
-  setCurrentSectionId: (sectionId: string) => void;
-  answers: { [key: string]: Answer };
+  answers: Record<string, Answer>;
   setAnswer: (questionId: string, value: string) => void;
   nextSection: () => void;
-  previousSection: () => void;
-  canGoNext: boolean;
-  canGoPrevious: boolean;
+  prevSection: () => void;
+  setCurrentSectionId: (sectionId: string) => void;
 }
 
-export const useWizard = create<WizardState>((set, get) => ({
-  currentSectionId: questionnaire.sections[0].id,
-  setCurrentSectionId: (sectionId: string) => set({ currentSectionId: sectionId }),
-  answers: {},
-  canGoNext: true,
-  canGoPrevious: false,
+const checkConditions = (currentSectionId: string, answers: Record<string, Answer>) => {
+  const currentSection = questionnaire.sections.find(s => s.id === currentSectionId);
+  if (!currentSection?.nextQuestion?.conditions) {
+    return currentSection?.nextQuestion?.nextQuestionId || "end";
+  }
 
+  for (const condition of currentSection.nextQuestion.conditions) {
+    if (condition.default) continue;
+
+    const matches = condition.value && Object.entries(condition.value).every(
+      ([key, value]) => answers[key]?.value === value
+    );
+
+    if (matches) {
+      return condition.nextQuestionId;
+    }
+  }
+
+  // Return default path if no conditions match
+  const defaultCondition = currentSection.nextQuestion.conditions.find(c => c.default);
+  return defaultCondition?.nextQuestionId || "end";
+};
+
+export const useWizardStore = create<WizardState>((set, get) => ({
+  currentSectionId: questionnaire.sections[0].id,
+  answers: {},
   setAnswer: (questionId: string, value: string) =>
     set((state) => ({
-      answers: { 
-        ...state.answers, 
-        [questionId]: { 
-          value, 
-          timestamp: Date.now() 
-        } 
+      answers: {
+        ...state.answers,
+        [questionId]: { value, timestamp: Date.now() },
       },
     })),
-
   nextSection: () => {
-    const { currentSectionId } = get();
-    const currentSectionIndex = questionnaire.sections.findIndex(s => s.id === currentSectionId);
+    const { currentSectionId, answers } = get();
+    const nextSectionId = checkConditions(currentSectionId, answers);
     
-    if (currentSectionIndex < questionnaire.sections.length - 1) {
-      const nextSection = questionnaire.sections[currentSectionIndex + 1];
-      set({ currentSectionId: nextSection.id });
+    if (nextSectionId) {
+      set({ currentSectionId: nextSectionId });
     }
   },
-
-  previousSection: () => {
-    const { currentSectionId } = get();
-    const currentSectionIndex = questionnaire.sections.findIndex(s => s.id === currentSectionId);
-    
-    if (currentSectionIndex > 0) {
-      const previousSection = questionnaire.sections[currentSectionIndex - 1];
-      set({ currentSectionId: previousSection.id });
-    }
-  },
+  prevSection: () =>
+    set((state) => {
+      const currentIndex = questionnaire.sections.findIndex(
+        (s) => s.id === state.currentSectionId
+      );
+      const prevSection = questionnaire.sections[currentIndex - 1];
+      return prevSection ? { currentSectionId: prevSection.id } : state;
+    }),
+  setCurrentSectionId: (sectionId: string) => set({ currentSectionId: sectionId }),
 }));
+
+export const useWizard = useWizardStore;
 
 export const useWizardAnswer = (questionId: string) => 
   useWizard(state => state.answers[questionId]);
