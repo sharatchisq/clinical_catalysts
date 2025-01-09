@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import { Sidebar } from "../../components/ui/dashboard/Sidebar";
+import { DashboardLayout } from "../../components/ui/layouts/DashboardLayout";
 import { AppointmentButtons } from "../../components/ui/dashboard/AppointmentButtons";
 import { PatientFlowChart } from "../../components/ui/dashboard/PatientFlowChart";
 import { UpcomingAppointmentsCard } from "../../components/ui/dashboard/UpcomingAppointmentsCard";
@@ -11,6 +11,7 @@ import { TreatmentProgressCard } from "../../components/ui/dashboard/TreatmentPr
 import { PatientDistributionCard } from "../../components/ui/dashboard/PatientDistributionCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { capitalize } from "@mui/material";
 
 const Dashboard = () => {
   const { user, logout } = useUser();
@@ -31,12 +32,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
-      <Sidebar onLogout={handleLogout} />
-
-      <div className="flex-1 p-8">
+    <DashboardLayout onLogout={handleLogout}>
+      <div className="p-8">
         <h1 className="text-2xl font-bold mb-6">
-          Hello, {user?.f_name} {user?.l_name}
+          Hello, {capitalize(user?.f_name ?? "")} {capitalize(user?.l_name ?? "")}
         </h1>
 
         <AppointmentButtons />
@@ -62,7 +61,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

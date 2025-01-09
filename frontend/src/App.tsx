@@ -9,6 +9,9 @@ import ForgotPassword from './pages/Login/ForgotPassword';
 import Questionnaire from './pages/Questionnaire';
 import { UserProvider } from './context/UserContext';
 import Summary from './pages/Summary';
+import Search from './pages/Search';
+import ProtectedRoute from './components/ProtectedRoute';
+import FollowUp from './pages/FollowUp';
 
 function App() {
   return (
@@ -17,12 +20,28 @@ function App() {
         <Toaster position="top-right" />
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/questionnaire" element={<Questionnaire />} />
-          <Route path="/summary" element={<Summary />} />
+          <Route 
+            path="/questionnaire" 
+            element={
+              <ProtectedRoute allowedRoles={['patient']}>
+                <Questionnaire />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/summary" 
+            element={
+              <ProtectedRoute allowedRoles={['patient']}>
+                <Summary />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/" element={<OTPLogin />} />
           <Route path="/create-password" element={<CreatePassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/follow-up" element={<FollowUp />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

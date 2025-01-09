@@ -1,14 +1,23 @@
-import { User, LayoutDashboard, ClipboardList, Settings, LogOut } from "lucide-react";
+import {
+  User,
+  LayoutDashboard,
+  ClipboardList,
+  Settings,
+  LogOut,
+  Search,
+  Calendar,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
 import { useUser } from "../../../context/UserContext";
 
 export const Sidebar = ({ onLogout }: { onLogout: () => void }) => {
   const { user } = useUser();
+  const isPatient = user?.role === "patient";
 
   return (
-    <div className="w-64 bg-card border-r px-4 py-6">
-      <div className="flex flex-col h-full">
+    <div className="w-64 h-full flex flex-col">
+      <div className="flex-1 px-4 py-6">
         <div className="space-y-4">
           <div className="flex items-center space-x-3 mb-6">
             {user?.profileImage ? (
@@ -44,30 +53,42 @@ export const Sidebar = ({ onLogout }: { onLogout: () => void }) => {
                 Overview
               </Button>
             </Link>
-            <Link to="/questionnaire">
+            {isPatient && (
+              <>
+                <Link to="/questionnaire">
+                  <Button variant="ghost" className="w-full justify-start">
+                    <ClipboardList className="mr-2 h-4 w-4" />
+                    Questionnaire
+                  </Button>
+                </Link>
+              </>
+            )}
+            <Link to="/search">
               <Button variant="ghost" className="w-full justify-start">
-                <ClipboardList className="mr-2 h-4 w-4" />
-                Questionnaire
+                <Search className="mr-2 h-4 w-4" />
+                Search Records
               </Button>
             </Link>
-            <Button variant="ghost" className="w-full justify-start">
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
+            <Link to="/follow-up">
+              <Button variant="ghost" className="w-full justify-start">
+                <Calendar className="mr-2 h-4 w-4" />
+                Follow-up Appointment
+              </Button>
+            </Link>
           </nav>
         </div>
+      </div>
 
-        <div className="mt-auto">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-red-500"
-            onClick={onLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
-        </div>
+      <div className="p-4 border-t border-slate-200">
+        <Button
+          variant="ghost"
+          className="w-full justify-start text-red-500"
+          onClick={onLogout}
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          Logout
+        </Button>
       </div>
     </div>
   );
-}; 
+};

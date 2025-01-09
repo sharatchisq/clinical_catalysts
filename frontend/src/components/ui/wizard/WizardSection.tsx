@@ -31,7 +31,7 @@ export function WizardSection() {
 
   return (
     <div>
-      <div className="px-6 py-4 bg-white border-b flex items-center justify-between">
+      {/* <div className="px-6 py-4 bg-white border-b flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h2 className="text-xl font-semibold text-slate-900">
             {currentSection.title}
@@ -41,7 +41,7 @@ export function WizardSection() {
         <div className="text-3xl" role="img" aria-label={currentSection.title}>
           {getSectionEmoji(currentSection.id)}
         </div>
-      </div>
+      </div> */}
       <div className="divide-y divide-gray-200">
         {currentSection.questions.map((question) => (
           <div key={question.id} className="px-6 py-4">

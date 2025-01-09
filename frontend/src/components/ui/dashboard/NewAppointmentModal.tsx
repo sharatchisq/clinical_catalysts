@@ -53,7 +53,6 @@ export const NewAppointmentModal = () => {
               <SelectContent>
                 <SelectItem value="initial">Initial Consultation</SelectItem>
                 <SelectItem value="followup">Follow-up</SelectItem>
-                <SelectItem value="emergency">Emergency</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -82,10 +81,10 @@ export const NewAppointmentModal = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <Label htmlFor="notes">Notes</Label>
             <Input id="notes" placeholder="Add any additional notes" />
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-end gap-3">
           <DialogTrigger asChild>
