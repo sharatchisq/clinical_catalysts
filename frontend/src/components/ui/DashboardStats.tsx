@@ -41,20 +41,19 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
       <div className="flex border-gray-100 pb-6">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm text-gray-600">Laboratory workload</span>
+            <span className="text-sm text-gray-600">Total Patients</span>
             <div className="flex items-center text-blue-500">
               <ArrowUpIcon className="w-3 h-3" />
               <span className="text-xs">15%</span>
             </div>
           </div>
-          <div className="text-5xl font-semibold mb-2">{stats.workload}%</div>
+          <div className="text-5xl font-semibold mb-2">{stats.workload}</div>
           <p className="text-xs text-gray-500 max-w-[280px]">
-            Laboratory utilization rates have shown an increase. This indicates an increase in
-            efficiency and optimization of resource utilization.
+            Total number of patients
           </p>
           <button className="mt-4 flex items-center gap-2 text-sm text-gray-600">
             <BarChart3 className="w-4 h-4" />
-            Detailed Data Analysis
+            View Queue
           </button>
         </div>
       </div>

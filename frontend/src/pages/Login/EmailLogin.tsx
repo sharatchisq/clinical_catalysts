@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import axios from "axios";
+import { useUser } from '../../context/UserContext';
 
 export default function EmailLogin() {
   const [email, setEmail] = useState("");
@@ -8,14 +10,33 @@ export default function EmailLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your authentication logic here
-    if (email && password) {
-      navigate("/dashboard");
-    } else {
-      setError("Please fill in all fields");
+    try {
+      const response = await axios.post("http://localhost:8080/login", {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        const userData = response.data;
+        setUser({
+          id: userData.id,
+          email: userData.email,
+          f_name: userData.f_name,
+          l_name: userData.l_name,
+          role: userData.role,
+          specialization: userData.specialization,
+          hospital: userData.hospital,
+          profileImage: userData.profileImage,
+        });
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -29,13 +50,20 @@ export default function EmailLogin() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit} autoComplete="off">
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
             )}
-            
+
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <div className="mt-1">
@@ -52,7 +80,10 @@ export default function EmailLogin() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1 relative">
@@ -87,13 +118,19 @@ export default function EmailLogin() {
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900"
+                >
                   Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
+                <Link
+                  to="/forgot-password"
+                  className="font-medium text-blue-600 hover:text-blue-500"
+                >
                   Forgot your password?
                 </Link>
               </div>
@@ -115,7 +152,9 @@ export default function EmailLogin() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-2 text-gray-500">Or continue with</span>
+                <span className="bg-white px-2 text-gray-500">
+                  Or continue with
+                </span>
               </div>
             </div>
 
@@ -132,4 +171,4 @@ export default function EmailLogin() {
       </div>
     </div>
   );
-} 
+}

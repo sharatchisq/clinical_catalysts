@@ -7,20 +7,24 @@ import CreatePassword from './pages/Login/CreatePassword';
 import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './pages/Login/ForgotPassword';
 import Questionnaire from './pages/Questionnaire';
+import { UserProvider } from './context/UserContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Toaster position="top-right" />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/questionnaire" element={<Dashboard />} />
-        <Route path="/summary" element={<SummaryPage />} />
-        <Route path="/" element={<OTPLogin />} />
-        <Route path="/create-password" element={<CreatePassword />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Toaster position="top-right" />
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/questionnaire" element={<Questionnaire />} />
+          <Route path="/summary" element={<SummaryPage />} />
+          <Route path="/" element={<OTPLogin />} />
+          <Route path="/create-password" element={<CreatePassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

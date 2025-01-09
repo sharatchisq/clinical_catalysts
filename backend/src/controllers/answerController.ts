@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addAnsers, getAnswersService } from "../service/answersService";
+import { addAnsers, getAnswersService,getAnswersByConditionService } from "../service/answersService";
 
 type Answer = {
   value: string;
@@ -28,4 +28,10 @@ export const getAnswers = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: "Error retrieving answers" });
   }
+};
+
+export const getAnswersByCondition = async (req: Request, res: Response) => {
+  const condition = req.params.condition;
+  const answers = await getAnswersByConditionService(condition);
+  res.status(200).json(answers);
 };
